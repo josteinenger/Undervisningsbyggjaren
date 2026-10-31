@@ -1,0 +1,275 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-serif: 'Georgia', 'Cambria', 'Times New Roman', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-hand: 'Patrick Hand', cursive, sans-serif;
+  }
+
+  .font-hand {
+    font-family: var(--font-hand);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8f9fa;
+    color: #0f172a;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Subtil varm scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #78716c;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a29e;
+}
+
+/* ==========================================================================
+   Universelle Keynote-stil storskjerm-overgongar
+   Silkemyk kryssfading (fade-in) kombinert med subtil 8px translateY
+   400ms cubic-bezier(0.16, 1, 0.3, 1) ease-out
+   ========================================================================== */
+@keyframes presenterSlideEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-presenter-slide,
+.slide-transition {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  animation: presenterSlideEnter 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-presenter-slide,
+  .slide-transition {
+    animation: none !important;
+    transform: none !important;
+    transition: opacity 0ms !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   Stikkord-avdekking: silkemjuk innfading med diskret 12px heving (350ms)
+   ========================================================================== */
+@keyframes presenterPointEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-presenter-point {
+  animation: presenterPointEnter 350ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-presenter-point {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   Gameshow "Kven skal ut?": Shake for feil alternativ og Fly-out for fasit
+   ========================================================================== */
+@keyframes kvenShake {
+  0%, 100% { transform: translateX(0); }
+  15%, 45%, 75% { transform: translateX(-8px); }
+  30%, 60%, 90% { transform: translateX(8px); }
+}
+
+.animate-kven-shake {
+  animation: kvenShake 550ms ease-in-out;
+}
+
+@keyframes kvenFlyOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(0.95) translateY(8px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) translateY(-1000px);
+  }
+}
+
+.animate-kven-flyout {
+  animation: kvenFlyOut 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleYIn {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-y {
+  animation: scaleYIn var(--anim-border-dur, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   DEL 1: Kapsel- og Stroke-animasjon på Storskjerm (Stikkord & Quiz)
+   GPU-akselererte keyframes for 60fps utan CPU-dropp
+   ========================================================================== */
+@keyframes strokeDraw {
+  0% {
+    stroke-dasharray: 0 100;
+    stroke-dashoffset: -20;
+    opacity: 0.25;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 100 0;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.animate-stroke-draw {
+  animation: strokeDraw var(--anim-border-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: stroke-dasharray, stroke-dashoffset, opacity;
+}
+
+@keyframes badgePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-badge-pop {
+  animation: badgePop var(--anim-badge-dur, 0.45s) cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes trackingIn {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.15em;
+    transform: translateX(4px);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: normal;
+    transform: translateX(0);
+  }
+}
+
+.animate-tracking-in {
+  animation: trackingIn var(--anim-text-dur, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: letter-spacing, opacity, transform;
+}
+
+@keyframes emeraldPulse {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.022);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-emerald-pulse {
+  animation: emeraldPulse 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   DEL 2: «Håndskriven i full fart»-effekt (Bøn & Bibelord på Storskjerm)
+   Rask horisontal avslørings-maske frå venstre mot høgre per ord/linje
+   ========================================================================== */
+@keyframes fastHandwrite {
+  0% {
+    opacity: 0;
+    clip-path: polygon(0 -20%, 0 -20%, 0 120%, 0 120%);
+    transform: translateY(2px);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 -20%, 108% -20%, 108% 120%, 0 120%);
+    transform: translateY(0);
+  }
+}
+
+.animate-fast-handwrite {
+  animation-name: fastHandwrite;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+  will-change: clip-path, opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stroke-draw,
+  .animate-badge-pop,
+  .animate-tracking-in,
+  .animate-emerald-pulse,
+  .animate-fast-handwrite {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    letter-spacing: normal !important;
+    opacity: 1 !important;
+  }
+}
+
+

@@ -1,0 +1,6 @@
+{
+  "name": "Visionary",
+  "description": "Dynamisk, modulbasert presentasjons- og visningsstudio for kirkerom, undervisning og visninger.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
